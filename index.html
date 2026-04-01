@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misi Ayam Jago Perbandingan By Mathnology</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Plus Jakarta Sans', sans-serif; }
+    
+    /* Animasi Dasar */
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pop { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.05); } 100% { transform: scale(1); opacity: 1; } }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-6px); } 40%,80% { transform: translateX(6px); } }
+    @keyframes spin-slow { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+    @keyframes majestic-float {
+      0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 15px rgba(250,204,21,0.5)); }
+      50% { transform: translateY(-15px) scale(1.15); filter: drop-shadow(0 0 40px rgba(250,204,21,1)); }
+    }
+    
+    /* === PROGRESS BAR STYLES === */
+    .progress-node {
+      transition: all 0.4s ease;
+      filter: grayscale(1) opacity(0.5);
+    }
+    .progress-node.active {
+      filter: grayscale(0) opacity(1);
+      transform: scale(1.2);
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+    }
+    #progressLineFill {
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 0 15px #38bdf8;
+    }
+
+    /* === EFEK EVOLUSI === */
+    @keyframes evoFlashBackdrop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+      30% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: blur(10px); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); filter: blur(20px); }
+    }
+    @keyframes particleOut {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tw-tx), var(--tw-ty)) scale(0); opacity: 0; }
+    }
+    
+    .super-rooster { display: inline-block; animation: majestic-float 3s ease-in-out infinite; z-index: 10; }
+    .sunburst-bg {
+      position: absolute; top: 50%; left: 50%; width: 300px; height: 300px;
+      transform: translate(-50%, -50%);
+      background: repeating-conic-gradient(from 0deg, rgba(250,204,21,0.4) 0deg 15deg, transparent 15deg 30deg);
+      border-radius: 50%; mask-image: radial-gradient(circle, black 30%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle, black 30%, transparent 70%);
+      animation: spin-slow 15s linear infinite; pointer-events: none;
+    }
+
+    .anim-slide { animation: slideUp 0.5s ease forwards; }
+    .anim-pop { animation: pop 0.4s ease forwards; }
+    .anim-shake { animation: shake 0.4s ease; }
+    
+    .avatar-glow { box-shadow: 0 0 20px rgba(56, 189, 248, 0.2); }
+    .avatar-fried { box-shadow: 0 0 30px rgba(248, 113, 113, 0.4); border-color: #991b1b !important; }
+    
+    .evo-particle {
+      position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
+      border-radius: 50%; pointer-events: none; opacity: 0;
+      animation: particleOut 0.8s ease-out forwards;
+    }
+    #flashBackdrop {
+      position: absolute; top: 50%; left: 50%; width: 200%; height: 200%;
+      border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(56,189,248,0.7) 40%, rgba(15,23,42,0) 70%);
+      pointer-events: none; opacity: 0; z-index: -1;
+    }
+
+    /* Tactile Buttons */
+    .btn-3d {
+      border-bottom: 4px solid rgba(0,0,0,0.3);
+      transition: all 0.1s ease;
+    }
+    .btn-3d:active {
+      transform: translateY(2px);
+      border-bottom-width: 0px;
+    }
+  </style>
+ </head>
+ <body class="h-full bg-[#0f172a]">
+  <div id="app" class="h-full w-full overflow-auto pb-10">
+   
+   <header class="text-center pt-10 pb-2 px-4 anim-slide">
+    <h1 class="text-2xl md:text-3xl font-800 text-slate-100 leading-snug">
+      Misi Ayam Jago Perbandingan
+      <span class="block mt-1 text-base font-bold text-[#38bdf8] uppercase tracking-widest">By Mathnology</span>
+    </h1>
+   </header>
+
+   <div class="max-w-md mx-auto px-10 mb-10 mt-6 anim-slide" style="animation-delay: 0.1s;">
+     <div class="relative h-1.5 w-full bg-slate-800 rounded-full">
+       <div id="progressLineFill" class="absolute top-0 left-0 h-full bg-[#38bdf8] rounded-full" style="width: 0%"></div>
+       
+       <div class="absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-0">
+         <div class="progress-node active text-xl" id="node0">🥚</div>
+         <div class="progress-node text-xl" id="node1">🐣</div>
+         <div class="progress-node text-xl" id="node2">🐥</div>
+         <div class="progress-node text-xl" id="node3">🐔</div>
+         <div class="progress-node text-xl" id="node4">🐓</div>
+       </div>
+     </div>
+     <div class="flex justify-between mt-6 text-[10px] font-bold uppercase tracking-tighter text-slate-500">
+       <span>Start</span>
+       <span>Lvl 1</span>
+       <span>Lvl 2</span>
+       <span>Lvl 3</span>
+       <span>Max</span>
+     </div>
+   </div>
+
+   <div id="headerAvatar" class="text-center mb-6 anim-slide" style="animation-delay: 0.2s;">
+    <div class="relative inline-block">
+      <div id="flashBackdrop"></div>
+      <div id="avatarContainer" class="inline-flex items-center justify-center w-28 h-28 rounded-full border-4 avatar-glow transition-all duration-300 bg-[#1e293b] border-[#38bdf8] relative z-10">
+        <span id="evoEmoji" class="text-5xl anim-pop">🥚</span>
+      </div>
+    </div>
+    <div id="evoText" class="mt-3 font-800 uppercase tracking-widest text-xs text-[#38bdf8]">Tahap: Telur</div>
+   </div>
+
+   <main class="max-w-2xl mx-auto px-4">
+    <div id="questionCard" class="rounded-3xl p-6 md:p-8 bg-[#1e293b] border border-slate-700 shadow-2xl anim-pop">
+     
+     <div class="text-center py-6 mb-6 rounded-2xl bg-[#0f172a] border border-slate-800">
+      <div class="text-4xl mb-3" id="caseIcon">🚗</div>
+      <h3 class="text-xl md:text-2xl font-800 text-slate-100">
+        <span id="vsA" class="text-[#38bdf8]"></span> 
+        <br><span class="text-[10px] font-900 uppercase tracking-[0.3em] text-slate-600 my-2 block">VS</span>
+        <span id="vsB" class="text-[#c084fc]"></span>
+      </h3>
+     </div>
+
+     <div id="btnContainer" class="grid grid-cols-2 gap-4 mb-2">
+       <button onclick="answer('senilai')" id="btnSenilai" class="btn-3d flex flex-col items-center gap-1 py-4 rounded-2xl font-800 bg-[#164e63] text-[#22d3ee] border-b-[#083344] hover:bg-[#155e75]">
+         <i data-lucide="trending-up" class="w-5 h-5"></i>
+         <span>SENILAI</span>
+       </button> 
+       <button onclick="answer('berbalik')" id="btnBerbalik" class="btn-3d flex flex-col items-center gap-1 py-4 rounded-2xl font-800 bg-[#4c1d95] text-[#c084fc] border-b-[#2e1065] hover:bg-[#5b21b6]">
+         <i data-lucide="trending-down" class="w-5 h-5"></i>
+         <span>BERBALIK</span>
+       </button>
+     </div>
+
+     <div id="tableContainer" class="hidden mt-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+       <div class="rounded-2xl overflow-hidden mb-4 bg-[#0f172a] border border-slate-800">
+        <table class="w-full text-sm">
+         <thead class="bg-[#1e3a5f] text-[#38bdf8] font-bold">
+          <tr>
+           <th id="colA" class="py-3 px-4 text-left"></th>
+           <th id="colB" class="py-3 px-4 text-left"></th>
+          </tr>
+         </thead>
+         <tbody id="tableBody" class="text-slate-300"></tbody>
+        </table>
+       </div>
+       
+       <div id="feedback" class="rounded-2xl p-5 mb-4 border transition-all">
+        <p id="feedbackText" class="font-900 text-lg mb-2"></p>
+        <p class="text-xs text-slate-400 leading-relaxed"><strong class="text-slate-100">Analisis:</strong> <span id="explanationText"></span></p>
+       </div>
+
+       <button onclick="nextAction()" id="nextBtn" class="w-full py-4 rounded-2xl font-800 text-sm flex items-center justify-center gap-2 bg-[#38bdf8] text-[#0f172a] shadow-lg shadow-cyan-900/20 hover:bg-[#7dd3fc]"> 
+         <span id="nextBtnText">LANJUTKAN</span> <i id="nextBtnIcon" data-lucide="chevron-right"></i> 
+       </button>
+     </div>
+    </div>
+    
+    <div id="resultScreen" class="hidden rounded-3xl p-10 text-center bg-[#1e293b] border border-slate-700 shadow-2xl anim-pop">
+     <div class="relative inline-block mb-10">
+       <div id="sunburstBg" class="sunburst-bg hidden"></div>
+       <div id="finalEmoji" class="text-8xl relative z-10">🎉</div>
+     </div>
+     <h2 id="finalTitle" class="text-3xl font-900 text-slate-100"></h2>
+     <p id="finalMessage" class="mt-3 text-slate-400 text-sm max-w-xs mx-auto"></p>
+     <div class="mt-8 mb-10 py-4 border-y border-slate-700 flex justify-center items-baseline gap-2">
+        <span id="finalCorrect" class="text-6xl font-900 text-[#facc15]">0</span>
+        <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Tahap Berhasil</span>
+     </div>
+     <button onclick="restartQuiz()" class="w-full py-4 rounded-2xl font-800 flex items-center justify-center gap-2 bg-[#38bdf8] text-[#0f172a] hover:bg-[#7dd3fc]">
+       <i data-lucide="rotate-ccw" class="w-5 h-5"></i> ULANGI MISI
+     </button>
+    </div>
+   </main>
+  </div>
+  
+  <script>
+    // Audio SFX
+    const sfxCorrect = new Audio('https://actions.google.com/sounds/v1/magic/magical_ping.ogg');
+    const sfxWrong = new Audio('https://actions.google.com/sounds/v1/foley/frying_pan_sizzle.ogg');
+    const sfxRooster = new Audio('https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg');
+
+    const cases = [
+      { icon:"🚗", colA:"Kecepatan", colB:"Waktu", data:[[40,6],[60,4],[120,2]], type:"berbalik", explanation:"Semakin tinggi kecepatan kendaraan, maka waktu tempuhnya menjadi semakin singkat." },
+      { icon:"🍎", colA:"Jumlah Apel", colB:"Harga", data:[[2,10000],[5,25000],[8,40000]], type:"senilai", explanation:"Semakin banyak jumlah apel yang dibeli, maka total harganya menjadi semakin mahal." },
+      { icon:"👷", colA:"Pekerja", colB:"Hari", data:[[3,12],[6,6],[9,4]], type:"berbalik", explanation:"Semakin banyak pekerja yang ditugaskan, maka hari pengerjaannya menjadi semakin cepat." },
+      { icon:"⛽", colA:"Jarak (km)", colB:"Bensin", data:[[50,5],[100,10],[200,20]], type:"senilai", explanation:"Semakin jauh jarak yang ditempuh, maka bensin yang dihabiskan menjadi semakin banyak." },
+      { icon:"🚰", colA:"Keran", colB:"Menit", data:[[1,60],[2,30],[3,20]], type:"berbalik", explanation:"Semakin banyak keran yang dibuka, maka menit pengisian bak menjadi semakin singkat." },
+      { icon:"📏", colA:"Panjang", colB:"Harga", data:[[2,30000],[5,75000],[10,150000]], type:"senilai", explanation:"Semakin panjang meteran kain yang dipotong, maka harganya menjadi semakin mahal." },
+      { icon:"🐄", colA:"Jumlah Sapi", colB:"Hari", data:[[10,30],[15,20],[30,10]], type:"berbalik", explanation:"Semakin banyak jumlah sapi, maka hari ketersediaan rumput menjadi semakin sedikit." },
+      { icon:"💰", colA:"Bulan", colB:"Saldo", data:[[2,100000],[4,200000],[6,300000]], type:"senilai", explanation:"Semakin lama bulan menabung, maka saldo yang terkumpul menjadi semakin besar." },
+      { icon:"🏎️", colA:"Gigi Sepeda", colB:"Kayuhan", data:[[1,6],[2,3],[3,2]], type:"berbalik", explanation:"Semakin berat/besar rasio gigi sepeda, maka kecepatan kayuhan menjadi semakin lambat." },
+      { icon:"📚", colA:"Jumlah Buku", colB:"Berat (kg)", data:[[2,1],[6,3],[10,5]], type:"senilai", explanation:"Semakin banyak jumlah buku di dalam tas, maka berat tasnya menjadi semakin bertambah." },
+      { icon:"🎂", colA:"Jumlah Orang", colB:"Potongan", data:[[2,6],[4,3],[6,2]], type:"berbalik", explanation:"Semakin banyak jumlah orang yang hadir, maka potongan kue per orang menjadi semakin kecil." },
+      { icon:"💡", colA:"Waktu (jam)", colB:"Listrik", data:[[1,0.1],[5,0.5],[10,1.0]], type:"senilai", explanation:"Semakin lama waktu lampu menyala, maka pemakaian daya listrik menjadi semakin besar." },
+      { icon:"🌐", colA:"Kecepatan", colB:"Waktu", data:[[10,60],[20,30],[60,10]], type:"berbalik", explanation:"Semakin besar kecepatan internet, maka waktu untuk mengunduh file menjadi semakin singkat." },
+      { icon:"🗺️", colA:"Jarak Peta", colB:"Jarak Asli", data:[[2,100],[4,200],[8,400]], type:"senilai", explanation:"Semakin jauh jarak pada denah peta, maka jarak di dunia aslinya menjadi semakin jauh." },
+      { icon:"🍬", colA:"Jumlah Anak", colB:"Permen", data:[[5,20],[10,10],[25,4]], type:"berbalik", explanation:"Semakin banyak jumlah anak, maka jatah permen untuk tiap anak menjadi semakin sedikit." },
+      { icon:"👕", colA:"Jumlah Kaos", colB:"Benang", data:[[3,6],[5,10],[9,18]], type:"senilai", explanation:"Semakin banyak jumlah kaos yang diproduksi, maka benang yang dibutuhkan menjadi semakin panjang." },
+      { icon:"🚜", colA:"Mesin Traktor", colB:"Hari", data:[[2,12],[4,6],[8,3]], type:"berbalik", explanation:"Semakin banyak mesin traktor yang beroperasi, maka hari pengerjaan sawah menjadi semakin cepat." },
+      { icon:"💵", colA:"Lembar", colB:"Biaya (Rp)", data:[[10,2000],[50,10000],[100,20000]], type:"senilai", explanation:"Semakin banyak lembar kertas yang difotokopi, maka total biayanya menjadi semakin mahal." },
+      { icon:"🛏️", colA:"Penghuni", colB:"Patungan", data:[[2,300000],[3,200000],[4,150000]], type:"berbalik", explanation:"Semakin banyak jumlah penghuni kamar, maka uang patungan per orangnya menjadi semakin murah." },
+      { icon:"🍰", colA:"Tepung (gr)", colB:"Gula (gr)", data:[[100,50],[200,100],[300,150]], type:"senilai", explanation:"Semakin banyak takaran tepung yang dipakai, maka takaran gula yang dicampur menjadi semakin banyak." },
+      { icon:"🖨️", colA:"Mesin Cetak", colB:"Jam", data:[[2,12],[4,6],[6,4]], type:"berbalik", explanation:"Semakin banyak mesin cetak yang menyala, maka jam penyelesaian majalah menjadi semakin singkat." },
+      { icon:"🍕", colA:"Porsi Pizza", colB:"Keju (gr)", data:[[2,100],[5,250],[10,500]], type:"senilai", explanation:"Semakin banyak porsi pizza yang dipesan, maka jumlah keju yang diparut menjadi semakin berat." },
+      { icon:"⏱️", colA:"Jam Lembur", colB:"Bonus (Rp)", data:[[2,50000],[4,100000],[6,150000]], type:"senilai", explanation:"Semakin banyak jam lembur yang dilakukan, maka bonus gaji yang diterima menjadi semakin besar." },
+      { icon:"🔲", colA:"Luas Keramik", colB:"Jumlah", data:[[100,400],[200,200],[400,100]], type:"berbalik", explanation:"Semakin besar ukuran satu keramik, maka jumlah keping keramik yang dibutuhkan menjadi semakin sedikit." }
+    ];
+
+    const evoStages = [
+      { emoji: '🥚', name: 'Telur', color: '#38bdf8' },
+      { emoji: '🐣', name: 'Menetas', color: '#facc15' },
+      { emoji: '🐥', name: 'Anak Ayam', color: '#fbbf24' },
+      { emoji: '🐔', name: 'Ayam Muda', color: '#f87171' },
+      { emoji: '🐓', name: 'Ayam Jago', color: '#facc15' }
+    ];
+
+    let shuffled = [], current = 0, correct = 0, answered = false, isFried = false;
+
+    function fisherYatesShuffle(array) {
+      let currentIndex = array.length, randomIndex;
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+      }
+      return array;
+    }
+
+    function updateProgressBar() {
+      const percentage = (current / 4) * 100;
+      document.getElementById('progressLineFill').style.width = percentage + '%';
+
+      for(let i = 0; i <= 4; i++) {
+        const node = document.getElementById('node' + i);
+        if (i <= current) node.classList.add('active');
+        else node.classList.remove('active');
+      }
+    }
+
+    function triggerEvolutionEffect(color) {
+      const backdrop = document.getElementById('flashBackdrop');
+      const container = document.getElementById('avatarContainer');
+      backdrop.style.animation = 'none'; void backdrop.offsetWidth;
+      backdrop.style.animation = 'evoFlashBackdrop 0.8s ease-out forwards';
+      container.style.animation = 'none'; void container.offsetWidth;
+      container.style.animation = `borderPulse 0.4s ease 2`; 
+      for (let i = 0; i < 15; i++) createParticle(container, color);
+    }
+
+    function createParticle(parent, color) {
+      const p = document.createElement('div');
+      p.className = 'evo-particle';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 60 + Math.random() * 30;
+      p.style.setProperty('--tw-tx', (Math.cos(angle)*dist)+'px');
+      p.style.setProperty('--tw-ty', (Math.sin(angle)*dist)+'px');
+      p.style.background = Math.random() > 0.3 ? color : '#fff';
+      parent.appendChild(p);
+      setTimeout(() => p.remove(), 800);
+    }
+
+    function updateEvolutionUI() {
+      const evoEmoji = document.getElementById('evoEmoji');
+      const evoText = document.getElementById('evoText');
+      const container = document.getElementById('avatarContainer');
+
+      if (isFried) {
+        evoEmoji.textContent = '🍗';
+        evoText.textContent = 'STATUS: AYAM GORENG';
+        evoText.style.color = '#f87171';
+        container.className = "inline-flex items-center justify-center w-28 h-28 rounded-full border-4 transition-all bg-[#1e293b] avatar-fried";
+        evoEmoji.classList.add('anim-shake');
+      } else {
+        const stage = evoStages[Math.min(correct, 4)];
+        evoEmoji.textContent = stage.emoji;
+        evoText.textContent = 'TAHAP: ' + stage.name;
+        evoText.style.color = stage.color;
+        container.style.borderColor = stage.color;
+        container.style.color = stage.color;
+        evoEmoji.classList.add('anim-pop');
+      }
+    }
+
+    function loadQuestion() {
+      answered = false;
+      const c = shuffled[current];
+      document.getElementById('caseIcon').textContent = c.icon;
+      document.getElementById('vsA').textContent = c.colA;
+      document.getElementById('vsB').textContent = c.colB;
+      document.getElementById('tableContainer').classList.add('hidden');
+      document.getElementById('btnSenilai').disabled = false;
+      document.getElementById('btnBerbalik').disabled = false;
+      document.getElementById('btnSenilai').style.opacity = '1';
+      document.getElementById('btnBerbalik').style.opacity = '1';
+      updateProgressBar();
+      lucide.createIcons();
+    }
+
+    function answer(type) {
+      if (answered) return;
+      answered = true;
+      const c = shuffled[current];
+      const isCorrect = type === c.type;
+      
+      document.getElementById('colA').textContent = c.colA;
+      document.getElementById('colB').textContent = c.colB;
+      document.getElementById('tableBody').innerHTML = c.data.map(r => `
+        <tr class="border-t border-slate-800">
+          <td class="py-3 px-4 font-bold">${r[0].toLocaleString('id-ID')}</td>
+          <td class="py-3 px-4 font-bold">${r[1].toLocaleString('id-ID')}</td>
+        </tr>`).join('');
+      
+      document.getElementById('explanationText').textContent = c.explanation;
+
+      const fb = document.getElementById('feedback');
+      const fbText = document.getElementById('feedbackText');
+
+      if (isCorrect) {
+        correct++;
+        sfxCorrect.play();
+        if (navigator.vibrate) navigator.vibrate(50);
+        fb.className = "rounded-2xl p-5 mb-4 border border-green-900 bg-green-950/30 transition-all";
+        fbText.textContent = 'Logika Tepat!';
+        fbText.style.color = '#4ade80';
+        triggerEvolutionEffect(evoStages[Math.min(correct, 4)].color);
+      } else {
+        isFried = true;
+        sfxWrong.play();
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        fb.className = "rounded-2xl p-5 mb-4 border border-red-900 bg-red-950/30 transition-all";
+        fbText.textContent = 'Salah Tebak!';
+        fbText.style.color = '#f87171';
+        document.getElementById('nextBtn').style.background = '#f87171';
+        document.getElementById('nextBtnText').textContent = 'LIHAT NASIB';
+        document.getElementById('questionCard').classList.add('anim-shake');
+      }
+
+      updateEvolutionUI();
+      document.getElementById('tableContainer').classList.remove('hidden');
+      document.querySelectorAll('.btn-3d').forEach(b => b.style.opacity = '0.3');
+      lucide.createIcons();
+    }
+
+    function nextAction() {
+      if (isFried) return showResult();
+      current++;
+      if (current >= 4) showResult();
+      else loadQuestion();
+    }
+
+    function showResult() {
+      document.getElementById('questionCard').classList.add('hidden');
+      document.getElementById('headerAvatar').classList.add('hidden');
+      document.querySelector('.max-w-md').classList.add('hidden'); 
+      
+      const rs = document.getElementById('resultScreen');
+      rs.classList.remove('hidden');
+      document.getElementById('finalCorrect').textContent = correct;
+      
+      const fEmoji = document.getElementById('finalEmoji');
+      const sunburst = document.getElementById('sunburstBg');
+      
+      if (isFried) {
+        fEmoji.textContent = '🍗';
+        fEmoji.className = 'text-8xl anim-shake';
+        document.getElementById('finalTitle').textContent = 'YA AMPUN...';
+        document.getElementById('finalMessage').textContent = 'Kamu salah menebak pola dan berakhir di penggorengan.';
+      } else {
+        sfxRooster.play();
+        fEmoji.textContent = '🐓';
+        fEmoji.className = 'text-8xl super-rooster';
+        sunburst.classList.remove('hidden');
+        document.getElementById('finalTitle').textContent = 'EVOLUSI SEMPURNA!';
+        document.getElementById('finalMessage').textContent = 'Hebat! Kamu telah menjadi Ayam Jago yang paling cerdas.';
+      }
+    }
+
+    function restartQuiz() {
+      current = 0; correct = 0; isFried = false;
+      shuffled = fisherYatesShuffle([...cases]).slice(0, 4);
+      
+      document.getElementById('resultScreen').classList.add('hidden');
+      document.getElementById('questionCard').classList.remove('hidden');
+      document.getElementById('headerAvatar').classList.remove('hidden');
+      document.querySelector('.max-w-md').classList.remove('hidden');
+      document.getElementById('nextBtnText').textContent = 'LANJUTKAN';
+      document.getElementById('nextBtn').style.background = '#38bdf8';
+      
+      updateEvolutionUI();
+      loadQuestion();
+    }
+
+    window.onload = () => {
+      restartQuiz();
+      lucide.createIcons();
+    };
+  </script>
+ </body>
+</html>
