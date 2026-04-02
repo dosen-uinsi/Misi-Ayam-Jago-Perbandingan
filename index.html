@@ -196,6 +196,8 @@
     const sfxCorrect = new Audio('https://actions.google.com/sounds/v1/magic/magical_ping.ogg');
     const sfxWrong = new Audio('https://actions.google.com/sounds/v1/foley/frying_pan_sizzle.ogg');
     const sfxRooster = new Audio('https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg');
+    // --- PENAMBAHAN AUDIO EVOLUSI ---
+    const sfxEvo = new Audio('https://raw.githubusercontent.com/dosen-uinsi/isi-Ayam-Jago-Perbandingan/main/316920__rudmer_rotteveel__chicken-single-alarm-call.wav');
 
     const cases = [
       { icon:"🚗", colA:"Kecepatan", colB:"Waktu", data:[[40,6],[60,4],[120,2]], type:"berbalik", explanation:"Semakin tinggi kecepatan kendaraan, maka waktu tempuhnya menjadi semakin singkat." },
@@ -336,6 +338,9 @@
       if (isCorrect) {
         correct++;
         sfxCorrect.play();
+        // --- MEMANGGIL AUDIO EVOLUSI ---
+        sfxEvo.play(); 
+        
         if (navigator.vibrate) navigator.vibrate(50);
         fb.className = "rounded-2xl p-5 mb-4 border border-green-900 bg-green-950/30 transition-all";
         fbText.textContent = 'Logika Tepat!';
