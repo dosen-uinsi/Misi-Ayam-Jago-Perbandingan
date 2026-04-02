@@ -45,7 +45,28 @@
       0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
       100% { transform: translate(var(--tw-tx), var(--tw-ty)) scale(0); opacity: 0; }
     }
+
+    /* === ANIMASI LOADING PENGEJARAN === */
+    /* scaleX(-1) membuat emoji menghadap ke kanan */
+    @keyframes run-bob-chick {
+      0%, 100% { transform: translateY(0) scaleX(-1); }
+      50% { transform: translateY(-10px) scaleX(-1); }
+    }
+    @keyframes run-bob-worm {
+      0%, 100% { transform: translateY(0) scaleX(-1); }
+      50% { transform: translateY(-6px) scaleX(-1) scaleY(1.1); }
+    }
+    .running-chick {
+      display: inline-block;
+      animation: run-bob-chick 0.3s ease-in-out infinite;
+    }
+    .running-worm {
+      display: inline-block;
+      animation: run-bob-worm 0.2s ease-in-out infinite; 
+      transition: left 0.1s linear;
+    }
     
+    /* === STYLE UMUM LAINNYA === */
     .super-rooster { display: inline-block; animation: majestic-float 3s ease-in-out infinite; z-index: 10; }
     .sunburst-bg {
       position: absolute; top: 50%; left: 50%; width: 300px; height: 300px;
@@ -86,16 +107,78 @@
   </style>
  </head>
  <body class="h-full bg-[#0f172a]">
-  <div id="app" class="h-full w-full overflow-auto pb-10">
+  
+  <div id="coverScreen" class="h-full w-full flex flex-col items-center justify-center px-6 text-center relative overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#38bdf8] opacity-10 blur-[80px] rounded-full z-0 pointer-events-none"></div>
+
+    <div class="relative z-10 anim-slide w-full max-w-md">
+      
+      <div class="text-7xl md:text-8xl mb-4 flex justify-center drop-shadow-[0_0_20px_rgba(56,189,248,0.25)]">
+        🐓
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-900 text-slate-100 leading-tight tracking-tight mb-2">
+        Misi Ayam Jago <br/>
+        <span class="text-[#38bdf8]">Perbandingan</span>
+      </h1>
+      
+      <div class="flex items-center justify-center gap-3 mt-3 mb-10">
+        <div class="h-px w-12 bg-slate-700"></div>
+        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-[0.25em]">
+          By <span class="text-slate-300">Mathnology</span>
+        </span>
+        <div class="h-px w-12 bg-slate-700"></div>
+      </div>
+
+      <p class="text-slate-400 text-sm md:text-base max-w-sm mx-auto mb-10 leading-relaxed">
+        Uji logikamu membedakan perbandingan senilai dan berbalik nilai. Jangan sampai salah tebak atau kamu akan berakhir di penggorengan!
+      </p>
+
+      <div id="loadingContainer" class="w-full max-w-xs mx-auto">
+        <div class="relative h-16 w-full mb-1 border-b border-slate-700/50">
+          <span class="running-chick text-5xl absolute bottom-0 -left-6 z-10">🐥</span>
+          <span id="loadingWorm" class="running-worm text-3xl absolute bottom-0" style="left: 0%;">🐛</span>
+        </div>
+        
+        <div class="w-full h-3 bg-[#1e293b] rounded-full overflow-hidden shadow-inner relative border border-slate-700/50">
+          <div id="loadingBarFill" class="h-full bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#facc15] transition-all ease-linear shadow-[0_0_15px_#38bdf8]" style="width: 0%;"></div>
+        </div>
+        
+        <div class="flex justify-between items-center mt-3 px-1">
+          <span id="loadingMessage" class="text-[11px] font-bold text-slate-400 uppercase tracking-widest animate-pulse">
+            Mengerami Telur...
+          </span>
+          <span id="loadingText" class="text-sm font-900 text-[#38bdf8]">
+            0%
+          </span>
+        </div>
+      </div>
+
+      <button id="startBtn" onclick="startGame()" class="hidden w-full max-w-xs mx-auto py-4 rounded-2xl font-900 text-lg flex items-center justify-center gap-2 bg-[#38bdf8] text-[#0f172a] shadow-lg shadow-cyan-900/40 hover:bg-[#7dd3fc] btn-3d border-b-[#0284c7] anim-pop">
+        MULAI MISI <i data-lucide="play" class="w-5 h-5 fill-current"></i>
+      </button>
+      
+    </div>
+  </div>
+
+  <div id="gameScreen" class="h-full w-full overflow-auto pb-10 hidden">
    
-   <header class="text-center pt-10 pb-2 px-4 anim-slide">
-    <h1 class="text-2xl md:text-3xl font-800 text-slate-100 leading-snug">
-      Misi Ayam Jago Perbandingan
-      <span class="block mt-1 text-base font-bold text-[#38bdf8] uppercase tracking-widest">By Mathnology</span>
+   <header class="text-center pt-8 pb-4 px-4 anim-slide">
+    <h1 class="text-2xl md:text-3xl font-800 text-slate-100 leading-tight tracking-tight">
+      Misi Ayam Jago <br/>
+      <span class="text-[#38bdf8]">Perbandingan</span>
     </h1>
+    
+    <div class="flex items-center justify-center gap-3 mt-3">
+      <div class="h-px w-8 bg-slate-700"></div>
+      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em]">
+        By <span class="text-slate-300">Mathnology</span>
+      </span>
+      <div class="h-px w-8 bg-slate-700"></div>
+    </div>
    </header>
 
-   <div class="max-w-md mx-auto px-10 mb-10 mt-6 anim-slide" style="animation-delay: 0.1s;">
+   <div class="max-w-md mx-auto px-10 mb-8 mt-4 anim-slide" style="animation-delay: 0.1s;">
      <div class="relative h-1.5 w-full bg-slate-800 rounded-full">
        <div id="progressLineFill" class="absolute top-0 left-0 h-full bg-[#38bdf8] rounded-full" style="width: 0%"></div>
        
@@ -192,19 +275,16 @@
   </div>
   
   <script>
-    // Audio SFX Update
+    // Audio BGM Utama
+    const bgMusic = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/Orkes%20Ayam%20Petualang.mp3');
+    bgMusic.loop = true;  // Memutar berulang kali
+    bgMusic.volume = 0.2; // Volume kecil (20%)
+
+    // Audio SFX
     const sfxCorrect = new Audio('https://actions.google.com/sounds/v1/magic/magical_ping.ogg');
-    
-    // Suara jawaban salah (Squeaky Toy)
     const sfxWrong = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/468443__breviceps__squeaky-toy-1.wav');
-    
-    // Suara Evolusi (Chicken Alarm Call)
     const sfxEvo = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/316920__rudmer_rotteveel__chicken-single-alarm-call.wav');
-    
-    // Suara Layar Akhir Menang (Ayam Jago)
     const sfxRooster = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/450388__sieuamthanh__conganoi.wav');
-    
-    // Suara Layar Akhir Kalah (Ayam Goreng)
     const sfxFriedFinal = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/441607__danielajq__23-gallina.wav');
 
     const cases = [
@@ -226,7 +306,7 @@
       { icon:"👕", colA:"Jumlah Kaos", colB:"Benang", data:[[3,6],[5,10],[9,18]], type:"senilai", explanation:"Semakin banyak jumlah kaos yang diproduksi, maka benang yang dibutuhkan menjadi semakin panjang." },
       { icon:"🚜", colA:"Mesin Traktor", colB:"Hari", data:[[2,12],[4,6],[8,3]], type:"berbalik", explanation:"Semakin banyak mesin traktor yang beroperasi, maka hari pengerjaan sawah menjadi semakin cepat." },
       { icon:"💵", colA:"Lembar", colB:"Biaya (Rp)", data:[[10,2000],[50,10000],[100,20000]], type:"senilai", explanation:"Semakin banyak lembar kertas yang difotokopi, maka total biayanya menjadi semakin mahal." },
-      { icon:"🛏️", colA:"Penghuni", colB:"Patungan", data:[[2,300000],[3,200000],[4,150000]], type:"berbalik", explanation:"Semakin banyak jumlah penghuni kamar, maka uang patungan per orangnya menjadi semakin murah." },
+      { icon:"🛏️", colA:"Penghuni", colB:"Patungan", data:[[2,300000],[3,200000],[4,150000]], type:"senilai", explanation:"Semakin banyak jumlah penghuni kamar, maka uang patungan per orangnya menjadi semakin murah." },
       { icon:"🍰", colA:"Tepung (gr)", colB:"Gula (gr)", data:[[100,50],[200,100],[300,150]], type:"senilai", explanation:"Semakin banyak takaran tepung yang dipakai, maka takaran gula yang dicampur menjadi semakin banyak." },
       { icon:"🖨️", colA:"Mesin Cetak", colB:"Jam", data:[[2,12],[4,6],[6,4]], type:"berbalik", explanation:"Semakin banyak mesin cetak yang menyala, maka jam penyelesaian majalah menjadi semakin singkat." },
       { icon:"🍕", colA:"Porsi Pizza", colB:"Keju (gr)", data:[[2,100],[5,250],[10,500]], type:"senilai", explanation:"Semakin banyak porsi pizza yang dipesan, maka jumlah keju yang diparut menjadi semakin berat." },
@@ -252,6 +332,46 @@
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
       }
       return array;
+    }
+
+    // --- FUNGSI ANIMASI LOADING KEREN ---
+    function startLoadingAnimation() {
+      const worm = document.getElementById('loadingWorm');
+      const loadingBar = document.getElementById('loadingBarFill');
+      const loadingText = document.getElementById('loadingText');
+      const loadingMessage = document.getElementById('loadingMessage');
+      const startBtn = document.getElementById('startBtn');
+      const container = document.getElementById('loadingContainer');
+      
+      const funnyMessages = [
+        "Mengerami telur...", 
+        "Menyiapkan pakan...", 
+        "Melatih kelincahan anak ayam...", 
+        "Memanaskan wajan penggorengan..."
+      ];
+      
+      let progress = 0;
+      const loadingInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 3) + 1; 
+        if (progress > 100) progress = 100;
+
+        loadingText.innerText = `${progress}%`;
+        loadingBar.style.width = `${progress}%`;
+        worm.style.left = `${progress * 0.9}%`;
+        
+        if (progress < 25) loadingMessage.innerText = funnyMessages[0];
+        else if (progress < 50) loadingMessage.innerText = funnyMessages[1];
+        else if (progress < 80) loadingMessage.innerText = funnyMessages[2];
+        else loadingMessage.innerText = funnyMessages[3];
+
+        if (progress === 100) {
+          clearInterval(loadingInterval);
+          setTimeout(() => {
+            container.classList.add('hidden');
+            startBtn.classList.remove('hidden');
+          }, 500);
+        }
+      }, 60); 
     }
 
     function updateProgressBar() {
@@ -293,8 +413,14 @@
       const container = document.getElementById('avatarContainer');
 
       if (isFried) {
-        evoEmoji.textContent = '🍗';
-        evoText.textContent = 'STATUS: AYAM GORENG';
+        if (correct === 0) {
+          evoEmoji.textContent = '🍳';
+          evoText.textContent = 'STATUS: TELUR CEPLOK';
+        } else {
+          evoEmoji.textContent = '🍗';
+          evoText.textContent = 'STATUS: AYAM GORENG';
+        }
+        
         evoText.style.color = '#f87171';
         container.className = "inline-flex items-center justify-center w-28 h-28 rounded-full border-4 transition-all bg-[#1e293b] avatar-fried";
         evoEmoji.classList.add('anim-shake');
@@ -360,7 +486,6 @@
       } else {
         isFried = true;
         
-        // Memutar suara salah tebak (Squeaky Toy)
         sfxWrong.currentTime = 0;
         sfxWrong.play().catch(err => console.log("Gagal memutar suara salah:", err));
         
@@ -399,16 +524,21 @@
       const sunburst = document.getElementById('sunburstBg');
       
       if (isFried) {
-        // Layar Hasil Ayam Goreng
         sfxFriedFinal.currentTime = 0;
         sfxFriedFinal.play().catch(err => console.log("Gagal memutar ayam goreng:", err));
 
-        fEmoji.textContent = '🍗';
+        if (correct === 0) {
+          fEmoji.textContent = '🍳';
+          document.getElementById('finalTitle').textContent = 'YAH, TELUR CEPLOK...';
+          document.getElementById('finalMessage').textContent = 'Belum sempat menetas, kamu sudah salah menebak dan berujung di wajan panas.';
+        } else {
+          fEmoji.textContent = '🍗';
+          document.getElementById('finalTitle').textContent = 'YA AMPUN...';
+          document.getElementById('finalMessage').textContent = 'Kamu salah menebak pola dan berakhir di penggorengan.';
+        }
+        
         fEmoji.className = 'text-8xl anim-shake';
-        document.getElementById('finalTitle').textContent = 'YA AMPUN...';
-        document.getElementById('finalMessage').textContent = 'Kamu salah menebak pola dan berakhir di penggorengan.';
       } else {
-        // Layar Hasil Ayam Jago (Evolusi Sempurna)
         sfxRooster.currentTime = 0;
         sfxRooster.play().catch(err => console.log("Gagal memutar ayam jago final:", err));
 
@@ -418,6 +548,16 @@
         document.getElementById('finalTitle').textContent = 'EVOLUSI SEMPURNA!';
         document.getElementById('finalMessage').textContent = 'Hebat! Kamu telah menjadi Ayam Jago yang paling cerdas.';
       }
+    }
+
+    function startGame() {
+      document.getElementById('coverScreen').classList.add('hidden');
+      document.getElementById('gameScreen').classList.remove('hidden');
+      
+      // Memutar musik BGM
+      bgMusic.play().catch(err => console.log("Gagal memutar musik latar:", err));
+      
+      restartQuiz();
     }
 
     function restartQuiz() {
@@ -437,8 +577,9 @@
     }
 
     window.onload = () => {
-      restartQuiz();
       lucide.createIcons();
+      // Jalankan animasi loading saat web pertama kali dibuka
+      startLoadingAnimation(); 
     };
   </script>
  </body>
