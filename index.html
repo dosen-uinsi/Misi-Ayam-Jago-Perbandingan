@@ -192,12 +192,20 @@
   </div>
   
   <script>
-    // Audio SFX
+    // Audio SFX Update
     const sfxCorrect = new Audio('https://actions.google.com/sounds/v1/magic/magical_ping.ogg');
-    const sfxWrong = new Audio('https://actions.google.com/sounds/v1/foley/frying_pan_sizzle.ogg');
-    const sfxRooster = new Audio('https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg');
-    // Audio Evolusi dengan link yang benar
+    
+    // Suara jawaban salah (Squeaky Toy)
+    const sfxWrong = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/468443__breviceps__squeaky-toy-1.wav');
+    
+    // Suara Evolusi (Chicken Alarm Call)
     const sfxEvo = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/316920__rudmer_rotteveel__chicken-single-alarm-call.wav');
+    
+    // Suara Layar Akhir Menang (Ayam Jago)
+    const sfxRooster = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/450388__sieuamthanh__conganoi.wav');
+    
+    // Suara Layar Akhir Kalah (Ayam Goreng)
+    const sfxFriedFinal = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/441607__danielajq__23-gallina.wav');
 
     const cases = [
       { icon:"🚗", colA:"Kecepatan", colB:"Waktu", data:[[40,6],[60,4],[120,2]], type:"berbalik", explanation:"Semakin tinggi kecepatan kendaraan, maka waktu tempuhnya menjadi semakin singkat." },
@@ -338,12 +346,11 @@
       if (isCorrect) {
         correct++;
         
-        // Memaksa audio mereset sebelum diputar agar tidak tabrakan/gagal play
         sfxCorrect.currentTime = 0;
         sfxCorrect.play();
         
         sfxEvo.currentTime = 0;
-        sfxEvo.play().catch(err => console.log("Gagal memutar suara:", err)); 
+        sfxEvo.play().catch(err => console.log("Gagal memutar suara evolusi:", err)); 
         
         if (navigator.vibrate) navigator.vibrate(50);
         fb.className = "rounded-2xl p-5 mb-4 border border-green-900 bg-green-950/30 transition-all";
@@ -352,8 +359,11 @@
         triggerEvolutionEffect(evoStages[Math.min(correct, 4)].color);
       } else {
         isFried = true;
+        
+        // Memutar suara salah tebak (Squeaky Toy)
         sfxWrong.currentTime = 0;
-        sfxWrong.play();
+        sfxWrong.play().catch(err => console.log("Gagal memutar suara salah:", err));
+        
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         fb.className = "rounded-2xl p-5 mb-4 border border-red-900 bg-red-950/30 transition-all";
         fbText.textContent = 'Salah Tebak!';
@@ -389,13 +399,19 @@
       const sunburst = document.getElementById('sunburstBg');
       
       if (isFried) {
+        // Layar Hasil Ayam Goreng
+        sfxFriedFinal.currentTime = 0;
+        sfxFriedFinal.play().catch(err => console.log("Gagal memutar ayam goreng:", err));
+
         fEmoji.textContent = '🍗';
         fEmoji.className = 'text-8xl anim-shake';
         document.getElementById('finalTitle').textContent = 'YA AMPUN...';
         document.getElementById('finalMessage').textContent = 'Kamu salah menebak pola dan berakhir di penggorengan.';
       } else {
+        // Layar Hasil Ayam Jago (Evolusi Sempurna)
         sfxRooster.currentTime = 0;
-        sfxRooster.play();
+        sfxRooster.play().catch(err => console.log("Gagal memutar ayam jago final:", err));
+
         fEmoji.textContent = '🐓';
         fEmoji.className = 'text-8xl super-rooster';
         sunburst.classList.remove('hidden');
@@ -414,6 +430,7 @@
       document.querySelector('.max-w-md').classList.remove('hidden');
       document.getElementById('nextBtnText').textContent = 'LANJUTKAN';
       document.getElementById('nextBtn').style.background = '#38bdf8';
+      document.getElementById('sunburstBg').classList.add('hidden');
       
       updateEvolutionUI();
       loadQuestion();
