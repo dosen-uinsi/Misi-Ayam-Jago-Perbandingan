@@ -196,8 +196,8 @@
     const sfxCorrect = new Audio('https://actions.google.com/sounds/v1/magic/magical_ping.ogg');
     const sfxWrong = new Audio('https://actions.google.com/sounds/v1/foley/frying_pan_sizzle.ogg');
     const sfxRooster = new Audio('https://actions.google.com/sounds/v1/animals/rooster_crowing.ogg');
-    // --- PENAMBAHAN AUDIO EVOLUSI ---
-    const sfxEvo = new Audio('https://raw.githubusercontent.com/dosen-uinsi/isi-Ayam-Jago-Perbandingan/main/316920__rudmer_rotteveel__chicken-single-alarm-call.wav');
+    // Audio Evolusi dengan link yang benar
+    const sfxEvo = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/316920__rudmer_rotteveel__chicken-single-alarm-call.wav');
 
     const cases = [
       { icon:"🚗", colA:"Kecepatan", colB:"Waktu", data:[[40,6],[60,4],[120,2]], type:"berbalik", explanation:"Semakin tinggi kecepatan kendaraan, maka waktu tempuhnya menjadi semakin singkat." },
@@ -337,9 +337,13 @@
 
       if (isCorrect) {
         correct++;
+        
+        // Memaksa audio mereset sebelum diputar agar tidak tabrakan/gagal play
+        sfxCorrect.currentTime = 0;
         sfxCorrect.play();
-        // --- MEMANGGIL AUDIO EVOLUSI ---
-        sfxEvo.play(); 
+        
+        sfxEvo.currentTime = 0;
+        sfxEvo.play().catch(err => console.log("Gagal memutar suara:", err)); 
         
         if (navigator.vibrate) navigator.vibrate(50);
         fb.className = "rounded-2xl p-5 mb-4 border border-green-900 bg-green-950/30 transition-all";
@@ -348,6 +352,7 @@
         triggerEvolutionEffect(evoStages[Math.min(correct, 4)].color);
       } else {
         isFried = true;
+        sfxWrong.currentTime = 0;
         sfxWrong.play();
         if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
         fb.className = "rounded-2xl p-5 mb-4 border border-red-900 bg-red-950/30 transition-all";
@@ -389,6 +394,7 @@
         document.getElementById('finalTitle').textContent = 'YA AMPUN...';
         document.getElementById('finalMessage').textContent = 'Kamu salah menebak pola dan berakhir di penggorengan.';
       } else {
+        sfxRooster.currentTime = 0;
         sfxRooster.play();
         fEmoji.textContent = '🐓';
         fEmoji.className = 'text-8xl super-rooster';
