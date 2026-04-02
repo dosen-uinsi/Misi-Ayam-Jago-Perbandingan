@@ -47,12 +47,10 @@
     }
 
     /* === ANIMASI LOADING PENGEJARAN === */
-    /* scaleX(-1) membuat emoji menghadap ke kanan */
     @keyframes run-bob-chick {
       0%, 100% { transform: translateY(0) scaleX(-1); }
       50% { transform: translateY(-10px) scaleX(-1); }
     }
-    /* scaleX(-1) agar ulat ikut menghadap ke kanan */
     @keyframes run-bob-worm {
       0%, 100% { transform: translateY(0) scaleX(-1); }
       50% { transform: translateY(-6px) scaleX(-1) scaleY(1.1); }
@@ -342,7 +340,6 @@
       return array;
     }
 
-    // --- FUNGSI ANIMASI LOADING KEREN ---
     function startLoadingAnimation() {
       const worm = document.getElementById('loadingWorm');
       const loadingBar = document.getElementById('loadingBarFill');
@@ -366,7 +363,6 @@
         loadingText.innerText = `${progress}%`;
         loadingBar.style.width = `${progress}%`;
         
-        // --- Perbaikan di sini ---
         worm.style.left = `${15 + (progress * 0.8)}%`; 
         
         if (progress < 25) loadingMessage.innerText = funnyMessages[0];
@@ -497,6 +493,13 @@
         fb.className = "rounded-2xl p-5 mb-4 border border-green-900 bg-green-950/30 transition-all";
         fbText.textContent = 'Logika Tepat!';
         fbText.style.color = '#4ade80';
+
+        // --- TAMBAHAN BARU: Animasikan Progress Bar Langsung Ke Tahap Berikutnya ---
+        document.getElementById('progressLineFill').style.width = ((correct / 4) * 100) + '%';
+        if (document.getElementById('node' + correct)) {
+          document.getElementById('node' + correct).classList.add('active');
+        }
+
         triggerEvolutionEffect(evoStages[Math.min(correct, 4)].color);
       } else {
         isFried = true;
@@ -535,7 +538,6 @@
       rs.classList.remove('hidden');
       document.getElementById('finalCorrect').textContent = correct;
       
-      // === MATIKAN MUSIK PENGIRING SAAT GAME BERAKHIR ===
       bgMusic.pause();
       bgMusic.currentTime = 0;
 
@@ -593,7 +595,6 @@
       updateEvolutionUI();
       loadQuestion();
 
-      // Putar kembali musik BGM setiap kali misi diulang/dimulai
       bgMusic.play().catch(err => console.log("Gagal memutar musik latar:", err));
     }
 
