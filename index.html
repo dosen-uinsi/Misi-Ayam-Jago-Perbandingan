@@ -293,31 +293,24 @@
     const sfxRooster = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/450388__sieuamthanh__conganoi.wav');
     const sfxFriedFinal = new Audio('https://github.com/dosen-uinsi/Misi-Ayam-Jago-Perbandingan/raw/refs/heads/main/441607__danielajq__23-gallina.wav');
 
+    // === DATA YANG TELAH DIPERBARUI ===
     const cases = [
-      { icon:"🚗", colA:"Kecepatan", colB:"Waktu", data:[[40,6],[60,4],[120,2]], type:"berbalik", explanation:"Semakin tinggi kecepatan kendaraan, maka waktu tempuhnya menjadi semakin singkat." },
-      { icon:"🍎", colA:"Jumlah Apel", colB:"Harga", data:[[2,10000],[5,25000],[8,40000]], type:"senilai", explanation:"Semakin banyak jumlah apel yang dibeli, maka total harganya menjadi semakin mahal." },
-      { icon:"👷", colA:"Pekerja", colB:"Hari", data:[[3,12],[6,6],[9,4]], type:"berbalik", explanation:"Semakin banyak pekerja yang ditugaskan, maka hari pengerjaannya menjadi semakin cepat." },
-      { icon:"⛽", colA:"Jarak (km)", colB:"Bensin", data:[[50,5],[100,10],[200,20]], type:"senilai", explanation:"Semakin jauh jarak yang ditempuh, maka bensin yang dihabiskan menjadi semakin banyak." },
-      { icon:"🚰", colA:"Keran", colB:"Menit", data:[[1,60],[2,30],[3,20]], type:"berbalik", explanation:"Semakin banyak keran yang dibuka, maka menit pengisian bak menjadi semakin singkat." },
-      { icon:"📏", colA:"Panjang", colB:"Harga", data:[[2,30000],[5,75000],[10,150000]], type:"senilai", explanation:"Semakin panjang meteran kain yang dipotong, maka harganya menjadi semakin mahal." },
-      { icon:"🐄", colA:"Jumlah Sapi", colB:"Hari", data:[[10,30],[15,20],[30,10]], type:"berbalik", explanation:"Semakin banyak jumlah sapi, maka hari ketersediaan rumput menjadi semakin sedikit." },
-      { icon:"💰", colA:"Bulan", colB:"Saldo", data:[[2,100000],[4,200000],[6,300000]], type:"senilai", explanation:"Semakin lama bulan menabung, maka saldo yang terkumpul menjadi semakin besar." },
-      { icon:"🏎️", colA:"Gigi Sepeda", colB:"Kayuhan", data:[[1,6],[2,3],[3,2]], type:"berbalik", explanation:"Semakin berat/besar rasio gigi sepeda, maka kecepatan kayuhan menjadi semakin lambat." },
-      { icon:"📚", colA:"Jumlah Buku", colB:"Berat (kg)", data:[[2,1],[6,3],[10,5]], type:"senilai", explanation:"Semakin banyak jumlah buku di dalam tas, maka berat tasnya menjadi semakin bertambah." },
-      { icon:"🎂", colA:"Jumlah Orang", colB:"Potongan", data:[[2,6],[4,3],[6,2]], type:"berbalik", explanation:"Semakin banyak jumlah orang yang hadir, maka potongan kue per orang menjadi semakin kecil." },
-      { icon:"💡", colA:"Waktu (jam)", colB:"Listrik", data:[[1,0.1],[5,0.5],[10,1.0]], type:"senilai", explanation:"Semakin lama waktu lampu menyala, maka pemakaian daya listrik menjadi semakin besar." },
-      { icon:"🌐", colA:"Kecepatan", colB:"Waktu", data:[[10,60],[20,30],[60,10]], type:"berbalik", explanation:"Semakin besar kecepatan internet, maka waktu untuk mengunduh file menjadi semakin singkat." },
-      { icon:"🗺️", colA:"Jarak Peta", colB:"Jarak Asli", data:[[2,100],[4,200],[8,400]], type:"senilai", explanation:"Semakin jauh jarak pada denah peta, maka jarak di dunia aslinya menjadi semakin jauh." },
-      { icon:"🍬", colA:"Jumlah Anak", colB:"Permen", data:[[5,20],[10,10],[25,4]], type:"berbalik", explanation:"Semakin banyak jumlah anak, maka jatah permen untuk tiap anak menjadi semakin sedikit." },
-      { icon:"👕", colA:"Jumlah Kaos", colB:"Benang", data:[[3,6],[5,10],[9,18]], type:"senilai", explanation:"Semakin banyak jumlah kaos yang diproduksi, maka benang yang dibutuhkan menjadi semakin panjang." },
-      { icon:"🚜", colA:"Mesin Traktor", colB:"Hari", data:[[2,12],[4,6],[8,3]], type:"berbalik", explanation:"Semakin banyak mesin traktor yang beroperasi, maka hari pengerjaan sawah menjadi semakin cepat." },
-      { icon:"💵", colA:"Lembar", colB:"Biaya (Rp)", data:[[10,2000],[50,10000],[100,20000]], type:"senilai", explanation:"Semakin banyak lembar kertas yang difotokopi, maka total biayanya menjadi semakin mahal." },
-      { icon:"🛏️", colA:"Penghuni", colB:"Patungan", data:[[2,300000],[3,200000],[4,150000]], type:"senilai", explanation:"Semakin banyak jumlah penghuni kamar, maka uang patungan per orangnya menjadi semakin murah." },
-      { icon:"🍰", colA:"Tepung (gr)", colB:"Gula (gr)", data:[[100,50],[200,100],[300,150]], type:"senilai", explanation:"Semakin banyak takaran tepung yang dipakai, maka takaran gula yang dicampur menjadi semakin banyak." },
-      { icon:"🖨️", colA:"Mesin Cetak", colB:"Jam", data:[[2,12],[4,6],[6,4]], type:"berbalik", explanation:"Semakin banyak mesin cetak yang menyala, maka jam penyelesaian majalah menjadi semakin singkat." },
-      { icon:"🍕", colA:"Porsi Pizza", colB:"Keju (gr)", data:[[2,100],[5,250],[10,500]], type:"senilai", explanation:"Semakin banyak porsi pizza yang dipesan, maka jumlah keju yang diparut menjadi semakin berat." },
-      { icon:"⏱️", colA:"Jam Lembur", colB:"Bonus (Rp)", data:[[2,50000],[4,100000],[6,150000]], type:"senilai", explanation:"Semakin banyak jam lembur yang dilakukan, maka bonus gaji yang diterima menjadi semakin besar." },
-      { icon:"🔲", colA:"Luas Keramik", colB:"Jumlah", data:[[100,400],[200,200],[400,100]], type:"berbalik", explanation:"Semakin besar ukuran satu keramik, maka jumlah keping keramik yang dibutuhkan menjadi semakin sedikit." }
+      // Kategori Senilai
+      { icon:"📦", colA:"Jumlah Barang", colB:"Harga Total (Rp)", data:[[2, 20000], [5, 50000], [10, 100000]], type:"senilai", explanation:"Semakin banyak jumlah barang yang dibeli, maka harga total yang harus dibayar akan semakin mahal." },
+      { icon:"🍽️", colA:"Jumlah Orang", colB:"Konsumsi (Porsi)", data:[[5, 15], [10, 30], [20, 60]], type:"senilai", explanation:"Semakin banyak jumlah orang, maka total kebutuhan konsumsi juga akan semakin bertambah." },
+      { icon:"⚙️", colA:"Waktu Kerja (jam)", colB:"Hasil Produksi", data:[[2, 50], [4, 100], [8, 200]], type:"senilai", explanation:"Semakin lama waktu kerja, maka hasil produksi yang didapat akan semakin banyak." },
+      { icon:"🚕", colA:"Jarak (km)", colB:"Biaya (Rp)", data:[[10, 50000], [20, 100000], [50, 250000]], type:"senilai", explanation:"Semakin jauh jarak perjalanan, maka total biaya perjalanan yang dikeluarkan akan semakin besar." },
+      { icon:"⛽", colA:"Jarak (km)", colB:"Bahan Bakar (L)", data:[[20, 2], [50, 5], [100, 10]], type:"senilai", explanation:"Semakin jauh jarak yang ditempuh, maka bahan bakar yang dihabiskan akan semakin banyak." },
+      { icon:"🗺️", colA:"Jarak Peta (cm)", colB:"Jarak Asli (km)", data:[[2, 10], [5, 25], [10, 50]], type:"senilai", explanation:"Semakin panjang jarak pada peta, maka jarak aslinya di dunia nyata juga semakin jauh." },
+      { icon:"🖨️", colA:"Jumlah Cetakan", colB:"Waktu (menit)", data:[[100, 5], [200, 10], [500, 25]], type:"senilai", explanation:"Semakin banyak jumlah cetakan, maka total waktu pengerjaan akan semakin bertambah (jika laju tetap)." },
+      
+      // Kategori Berbalik Nilai
+      { icon:"👷", colA:"Jumlah Pekerja", colB:"Waktu (Hari)", data:[[5, 20], [10, 10], [20, 5]], type:"berbalik", explanation:"Semakin banyak pekerja yang mengerjakan proyek, maka waktu selesainya akan semakin singkat/cepat." },
+      { icon:"🏭", colA:"Jumlah Mesin", colB:"Waktu (Jam)", data:[[2, 12], [4, 6], [8, 3]], type:"berbalik", explanation:"Semakin banyak mesin yang dioperasikan, maka waktu penyelesaian produksi menjadi semakin singkat." },
+      { icon:"🏎️", colA:"Kecepatan (km/jam)", colB:"Waktu Tempuh (Jam)", data:[[40, 6], [60, 4], [120, 2]], type:"berbalik", explanation:"Semakin tinggi kecepatan, maka waktu yang dibutuhkan untuk sampai di tujuan semakin singkat." },
+      { icon:"🚰", colA:"Jumlah Keran", colB:"Waktu Pengisian (menit)", data:[[1, 60], [2, 30], [4, 15]], type:"berbalik", explanation:"Semakin banyak keran air yang dibuka bersamaan, maka waktu pengisian tangki akan semakin cepat." },
+      { icon:"🚚", colA:"Kapasitas per Trip (Ton)", colB:"Jumlah Trip", data:[[2, 12], [4, 6], [6, 4]], type:"berbalik", explanation:"Semakin besar kapasitas muatan per jalan (trip), maka jumlah trip bolak-balik yang dibutuhkan semakin sedikit." },
+      { icon:"🤝", colA:"Banyak Orang", colB:"Lama Selesai (Jam)", data:[[2, 12], [4, 6], [8, 3]], type:"berbalik", explanation:"Semakin banyak orang yang saling berbagi tugas pekerjaan, maka waktu penyelesaiannya akan semakin cepat." }
     ];
 
     const evoStages = [
